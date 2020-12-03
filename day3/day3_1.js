@@ -3,7 +3,7 @@ var filename = "./day3input.txt";
 
 fs.readFile(filename, 'utf8', function(err, data){
     if (err) throw err;
-    runIt(data.split("\r\n"));
+    runIt(data.split("\n"));
 })
 
 var runIt = function(data) {
@@ -15,6 +15,7 @@ var runIt = function(data) {
             prevX = prevX + 3;
             console.log(item[0]);
         } else {
+            console.log(item[thisX]);
             prevX = prevX + 3;
             if (item[thisX] == "#") {
                 treesFound++;

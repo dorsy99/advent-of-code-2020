@@ -1,3 +1,17 @@
+var demo = [
+    "..##.......",
+    "#...#...#..",
+    ".#....#..#.",
+    "..#.#...#.#",
+    ".#...##..#.",
+    "..#.##.....",
+    ".#.#.#....#",
+    ".#........#",
+    "#.##...#...",
+    "#...##....#",
+    ".#..#...#.#"
+];
+
 var fs = require('fs');
 var filename = "./day3input.txt";
 
@@ -5,48 +19,42 @@ fs.readFile(filename, 'utf8', function(err, data){
     if (err) throw err;
     var coord = ["1,1", "3,1", "5,1", "7,1", "1,2"];
     var answers = []
-    for (step in coord) {
-        answers.push(runIt(data.split("\r\n"), coord[step]));
-    }
-    console.log(answers);
+    //console.log(data.split("\n"));
+    coord.forEach(function(step){
+        //console.log("STEP");
+        //answers.push(runIt(data.split("\n"),step));
+    })
+        
+    //console.log(answers);
     runIt(data.split("\r\n"));
 })
 
 var runIt = function(data, step) {
     var prevAcross = 0;
-    var across = step.split(",")[0];
-    var down = step.split(",")[1];
+    var across = parseInt(step.split(",")[0]);
+    var down = parseInt(step.split(",")[1]);
     var treesFound = 0;
 
-    
-    for (var i = 0; i < data.length; i + down) {
-        var thisStep = prevAcross % data[i].length;    
+    console.log("DOWN: " + down + " AC: " + across);
+
+    for (var i = 0; i < data.length; i = i + down) {
+        //console.log(data[i]);
+        var thisStep = prevAcross % 30;
         if (i == 0) {
             prevAcross = prevAcross + across;
-            //console.log(item[0]);
+            
         } else {
-            prevX = prevX + across;
+            console.log(prevAcross);
+            prevAcross = prevAcross + across;
             if (data[i][thisStep] == "#") {
                 treesFound++;
             }
-            //console.log(item[thisX]);
+            //console.log(data[i][thisStep]);
         }
     }
 
     return treesFound;
-    
-    /* data.forEach(function(item, y){
-        var thisX = 
-        
-        
-        
-        if (down == 1) {
-
-        }
-        
-        //console.log(item + " + " + i);
-        
-    })
-    console.log(treesFound);
-    */
 }
+
+
+runIt(demo,"3,1");
