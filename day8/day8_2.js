@@ -15,6 +15,7 @@ var filename = "day8input.txt";
 fs.readFile(filename, 'utf8', function (err, data) {
     if (err) throw err;
     //runIt(data);
+    getFixes(data);
 })
 
 var getFixes = function(data) {
@@ -26,23 +27,33 @@ var getFixes = function(data) {
         var arg = original[i].split(" ")[0];
         var val = original[i].split(" ")[1];
         if (arg == "jmp") {
-            var newAr = JSON.stringify(original);
-            newAr = JSON.parse(newAr);
-            newAr[i] = newAr[i].replace("jmp","nop")
-            options.push(original)
+            var newAr = [...original];
+            newAr[i] = newAr[i].replace("jmp", "nop");
+            options.push(newAr);
+        }
+        if (arg == "nop") {
+            var newAr = [...original];
+            newAr[i] = newAr[i].replace("nop", "jmp");
+            options.push(newAr);
         }
     }
-    console.log(options)
+    console.log(options.length);
+
+    options.forEach(function(option){
+        runIt(option);
+    })
 }
-getFixes(demo);
+
 
 var runIt = function(data) {
-    var instructions = data.split("\n");
+    var instructions = data; //.split("\n");
     var accumulator = 0;
     var done = [];
+    var broken = 0;
     for (var i = 0; i < instructions.length; i == i) {
         if (done.includes(i)) {
-            console.log("breaking");
+            broken = 1;
+            //console.log("breaking");
             break;
         }
         
@@ -66,8 +77,13 @@ var runIt = function(data) {
         }
         //console.log(done);
     }
-    console.log(accumulator);
+    if (broken == 0) {
+        console.log(accumulator);
+    }
+    
 
 }
+
+//getFixes(demo);
 
 //runIt(demo);
