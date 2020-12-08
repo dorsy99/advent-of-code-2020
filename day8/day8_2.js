@@ -17,6 +17,25 @@ fs.readFile(filename, 'utf8', function (err, data) {
     //runIt(data);
 })
 
+var getFixes = function(data) {
+    var lastFixed = 0;
+    var options = [];
+    var original = data.split("\n");
+
+    for (var i = lastFixed; i < original.length; i++) {
+        var arg = original[i].split(" ")[0];
+        var val = original[i].split(" ")[1];
+        if (arg == "jmp") {
+            var newAr = JSON.stringify(original);
+            newAr = JSON.parse(newAr);
+            newAr[i] = newAr[i].replace("jmp","nop")
+            options.push(original)
+        }
+    }
+    console.log(options)
+}
+getFixes(demo);
+
 var runIt = function(data) {
     var instructions = data.split("\n");
     var accumulator = 0;
@@ -51,4 +70,4 @@ var runIt = function(data) {
 
 }
 
-runIt(demo);
+//runIt(demo);
