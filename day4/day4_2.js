@@ -4,6 +4,7 @@ var filename = "./day4input.txt";
 fs.readFile(filename, 'utf8', function (err, data) {
     if (err) throw err;
     doIt(data);
+    //console.log(data.split("\r\n"));
 })
 
 var demo = `eyr:1972 cid:100
@@ -21,7 +22,7 @@ eyr:2038 hcl:74454a iyr:2023
 pid:3556412378 byr:2007`;
 
 var doIt = function(data) {
-    var passports = data.replace(/\n\n/g,"|").replace(/\n/g," ").split("|");
+    var passports = data.replace(/\r\n\r\n/g,"|").replace(/\r\n/g," ").split("|");
     var valid = 0
     //console.log(passports);
 
@@ -47,6 +48,8 @@ var doIt = function(data) {
 
 var checkValid = function(obj) {
 
+    if (Object.keys)
+
     //byr (Birth Year) - four digits; at least 1920 and at most 2002.
     if (obj.byr.length != 4) {
         return false;
@@ -65,6 +68,9 @@ var checkValid = function(obj) {
         return false;
     }
     if (parseInt(obj.iyr) > 2020) {
+        return false;
+    }
+    if (isNaN(obj.byr)) {
         return false;
     }
     //eyr (Expiration Year) - four digits; at least 2020 and at most 2030.
