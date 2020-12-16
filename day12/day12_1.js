@@ -15,8 +15,8 @@ fs.readFile(filename, 'utf8', function (err, data) {
 })
 
 var runIt = function(data){
-    input = data.split("\n");
-    console.log(input);
+    input = data.split("\r\n");
+    //console.log(input);
 
     var distance = {
         "N": 0,
@@ -24,6 +24,46 @@ var runIt = function(data){
         "S": 0,
         "W": 0
     }
+
+    var turns = {
+        "N": {
+            "0": "N",
+            "90": "E",
+            "180": "S",
+            "270": "W",
+            "-90": "W",
+            "-180": "S",
+            "-270": "E"
+        },
+        "E": {
+            "0": "E",
+            "90": "S",
+            "180": "W",
+            "270": "N",
+            "-90": "N",
+            "-180": "W",
+            "-270": "S"
+        }, 
+        "S": {
+            "0": "S",
+            "90": "W",
+            "180": "N",
+            "270": "E",
+            "-90": "E",
+            "-180": "N",
+            "-270": "W"
+        }, 
+        "W": {
+            "0": "W",
+            "90": "N",
+            "180": "E",
+            "270": "S",
+            "-90": "S",
+            "-180": "E",
+            "-270": "N"
+        }
+    }
+
 
     var facing = "E";
     var angle = 90;
@@ -38,12 +78,21 @@ var runIt = function(data){
             distance[facing] += int;
         }
         if (dir == "L") {
-            angle = angle - int;
+            //angle = angle - int;
+            console.log("CURRENT ANGLE: " + facing);
+            console.log("DIR: " + dir + " INT: " + int);
+            console.log("TURNING: " + turns[facing][-Math.abs(int.toString())]);
+            facing = turns[facing][-Math.abs(int.toString())];
         }
         if (dir == "R") {
-            angle = angle + int;
+            //angle = angle + int;
+            console.log("CURRENT ANGLE: " + facing);
+            console.log("DIR: " + dir + " INT: " + int);
+            console.log("TURNING: " + turns[facing][int.toString()]);
+            facing = turns[facing][int.toString()];
         }
-        angle = Math.abs(angle%360);
+        
+        /*angle = Math.abs(angle%360);
 
         switch(angle) {
             case 0:
@@ -59,6 +108,7 @@ var runIt = function(data){
                 facing = "W";
                 break;
         }
+        */
         //if (dir == )
     })
     console.log(distance);
